@@ -1,0 +1,82 @@
+
+                   @@@@@@                          @@@    @@@
+                     @@                             @@     @ 
+                     @@                             @@@    @ 
+                     @@           @@@       @@@     @ @@   @ 
+                     @@         @@   @@   @@   @@   @ @@   @ 
+                     @@        @@     @@ @@     @@  @  @@  @ 
+                     @@        @@     @@ @@     @@  @   @@ @ 
+                     @@        @@     @@ @@     @@  @   @@ @ 
+                     @@      @ @@     @@ @@     @@  @    @@@ 
+                     @@     @   @@   @@   @@   @@   @     @@ 
+                   @@@@@@@@@@     @@@       @@@    @@@    @@ 
+
+                           Local optimization on Nets
+
+             Alliance CAD System 5.0 20090901, loon 5.0 [2003/12/07]
+             Copyright (c) 2000-2019,                 ASIM/LIP6/UPMC
+             Author(s):                              François Donnet
+             E-mail        :             alliance-users@asim.lip6.fr
+
+	MBK_IN_LO	: vst
+	MBK_OUT_LO	: vst
+	MBK_TARGET_LIB	: /usr/lib/alliance/cells/sxlib
+
+Reading parameter file 'paramfile.lax'...
+50% area - 50% delay optimization
+Reading file 'daco_b.vst'...
+Controlling file 'paramfile.lax'...
+Reading lib '/usr/lib/alliance/cells/sxlib'...
+Capacitances on file 'daco_b.vst'...
+Delays on file 'daco_b.vst'...2910 ps
+Area on file 'daco_b.vst'...84500 lamda² (with over-cell routing)
+Details...
+	inv_x2: 12 (10%)
+	na2_x1: 10 (11%)
+	no2_x1: 6 (7%)
+	a2_x2: 6 (8%)
+	na3_x1: 5 (7%)
+	sff1_x4: 5 (26%)
+	o2_x2: 3 (4%)
+	on12_x1: 2 (2%)
+	na4_x1: 2 (3%)
+	a3_x2: 2 (3%)
+	oa2a22_x2: 1 (2%)
+	no3_x1: 1 (1%)
+	noa22_x1: 1 (1%)
+	ao22_x2: 1 (1%)
+	o4_x2: 1 (2%)
+	an12_x1: 1 (1%)
+	oa22_x2: 1 (1%)
+	Total: 60
+Worst RC on file 'daco_b.vst'...303 ps
+Inserting buffers on critical path for file 'daco_b_l.vst'...3 buffers inserted -> 2845 ps
+Improving RC on critical path for file 'daco_b_l.vst'...2802 ps
+Improving all RC for file 'daco_b_l.vst'...
+Worst RC on file 'daco_b_l.vst'...303 ps
+Area on file 'daco_b_l.vst'...87500 lamda² (with over-cell routing)
+Details...
+	inv_x2: 12 (10%)
+	na2_x1: 10 (11%)
+	no2_x1: 6 (6%)
+	a2_x2: 6 (8%)
+	na3_x1: 5 (7%)
+	sff1_x4: 5 (25%)
+	buf_x2: 3 (3%)
+	o2_x2: 3 (4%)
+	on12_x1: 2 (2%)
+	na4_x1: 2 (3%)
+	a3_x2: 2 (3%)
+	oa2a22_x2: 1 (2%)
+	no3_x1: 1 (1%)
+	noa22_x1: 1 (1%)
+	ao22_x2: 1 (1%)
+	o4_x2: 1 (2%)
+	an12_x1: 1 (1%)
+	oa22_x2: 1 (1%)
+	Total: 63
+Critical path (no warranty)...2802 ps from 'dac_cs 1' to 'alarm'
+Saving file 'daco_b_l.vst'...
+Saving delay gradient in xsch color file 'daco_b_l.xsc'...
+End of loon...
+

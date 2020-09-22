@@ -1,0 +1,101 @@
+-- VHDL data flow description generated from `daca`
+--		date : Fri Apr 26 19:21:39 2019
+
+
+-- Entity Declaration
+
+ENTITY daca IS
+  PORT (
+  ck : in BIT;	-- ck
+  vdd : in BIT;	-- vdd
+  vss : in BIT;	-- vss
+  inp : in bit_vector(3 DOWNTO 0) ;	-- inp
+  daytime : in BIT;	-- daytime
+  reset : in BIT;	-- reset
+  alarm : out BIT;	-- alarm
+  door : out BIT	-- door
+  );
+END daca;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE VBE OF daca IS
+  SIGNAL dac_cs : REG_VECTOR(2 DOWNTO 0) REGISTER;	-- dac_cs
+  SIGNAL dac_cs_s4 : BIT;		-- dac_cs_s4
+  SIGNAL dac_ns_s4 : BIT;		-- dac_ns_s4
+  SIGNAL dac_cs_s3 : BIT;		-- dac_cs_s3
+  SIGNAL dac_ns_s3 : BIT;		-- dac_ns_s3
+  SIGNAL dac_cs_s2 : BIT;		-- dac_cs_s2
+  SIGNAL dac_ns_s2 : BIT;		-- dac_ns_s2
+  SIGNAL dac_cs_s1 : BIT;		-- dac_cs_s1
+  SIGNAL dac_ns_s1 : BIT;		-- dac_ns_s1
+  SIGNAL dac_cs_s0 : BIT;		-- dac_cs_s0
+  SIGNAL dac_ns_s0 : BIT;		-- dac_ns_s0
+  SIGNAL dac_ns : BIT_VECTOR(2 DOWNTO 0);	-- dac_ns
+
+BEGIN
+  dac_ns(0) <= dac_ns_s4;
+  dac_ns(1) <= (dac_ns_s1 OR dac_ns_s3);
+  dac_ns(2) <= (dac_ns_s2 OR dac_ns_s3);
+  dac_ns_s0 <= ((dac_cs_s1 AND (inp(0) OR NOT(inp(1)) OR NOT(
+inp(2)) OR inp(3))) OR (dac_cs_s2 AND (inp(0) OR NOT(
+inp(1)) OR inp(2) OR NOT(inp(3)))) OR (dac_cs_s3 AND (
+inp(0) OR inp(1) OR inp(2) OR inp(3))) OR dac_cs_s4);
+  dac_cs_s0 <= (NOT(dac_cs(2)) AND NOT(dac_cs(1)) AND NOT(
+dac_cs(0)));
+  dac_ns_s1 <= (dac_cs_s0 AND NOT(inp(0)) AND inp(1) AND NOT(
+inp(2)) AND NOT(inp(3)));
+  dac_cs_s1 <= (NOT(dac_cs(2)) AND dac_cs(1));
+  dac_ns_s2 <= (dac_cs_s1 AND NOT(inp(0)) AND inp(1) AND inp(2) 
+AND NOT(inp(3)));
+  dac_cs_s2 <= (dac_cs(2) AND NOT(dac_cs(1)));
+  dac_ns_s3 <= (dac_cs_s2 AND NOT(inp(0)) AND inp(1) AND NOT(
+inp(2)) AND inp(3));
+  dac_cs_s3 <= (dac_cs(2) AND dac_cs(1));
+  dac_ns_s4 <= (dac_cs_s3 AND NOT(inp(0)) AND NOT(inp(1)) AND 
+NOT(inp(2)) AND NOT(inp(3)));
+  dac_cs_s4 <= dac_cs(0);
+  label0 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs(0) <= GUARDED (dac_ns(0) AND NOT(reset));
+  END BLOCK label0;
+  label1 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs(1) <= GUARDED (dac_ns(1) AND NOT(reset));
+  END BLOCK label1;
+  label2 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs(2) <= GUARDED (dac_ns(2) AND NOT(reset));
+  END BLOCK label2;
+
+door <= ((dac_cs_s0 AND NOT(reset) AND inp(0) AND daytime
+ AND NOT(inp(1)) AND inp(2) AND inp(3)) OR (
+dac_cs_s1 AND NOT(reset) AND inp(0) AND daytime AND NOT(
+inp(1)) AND inp(2) AND inp(3)) OR (dac_cs_s2 AND NOT(
+reset) AND inp(0) AND daytime AND NOT(inp(1)) AND 
+inp(2) AND inp(3)) OR (dac_cs_s3 AND NOT(reset) AND 
+inp(0) AND daytime AND NOT(inp(1)) AND inp(2) AND 
+inp(3)) OR (dac_cs_s4 AND ((NOT(reset) AND inp(0) AND 
+NOT(inp(1)) AND inp(2) AND NOT(inp(3))) OR (NOT(
+reset) AND inp(0) AND daytime AND NOT(inp(1)) AND 
+inp(2)))));
+
+alarm <= ((dac_cs_s0 AND ((NOT(reset) AND (inp(0) OR NOT(
+inp(1)) OR inp(2)) AND NOT(inp(3))) OR (NOT(reset) AND 
+NOT(inp(0) AND daytime AND NOT(inp(1)) AND inp(2)) 
+AND inp(3)))) OR (dac_cs_s1 AND ((NOT(reset) AND 
+NOT(NOT(inp(0)) AND inp(1) AND inp(2)) AND NOT(inp(3)
+)) OR (NOT(reset) AND NOT(inp(0) AND daytime AND 
+NOT(inp(1)) AND inp(2)) AND inp(3)))) OR (dac_cs_s2 
+AND ((NOT(reset) AND NOT(inp(3))) OR (NOT(reset) AND
+ NOT(NOT(inp(0)) AND inp(1)) AND NOT(inp(2))) OR (
+NOT(reset) AND (NOT(inp(0)) OR NOT(daytime) OR 
+inp(1)) AND inp(2)))) OR (dac_cs_s3 AND ((NOT(reset) 
+AND (inp(0) OR inp(1) OR inp(2)) AND NOT(inp(3))) OR
+ (NOT(reset) AND NOT(inp(0) AND daytime AND NOT(
+inp(1)) AND inp(2)) AND inp(3)))) OR (dac_cs_s4 AND ((
+NOT(reset) AND NOT(inp(0) AND daytime AND NOT(inp(1)
+) AND inp(2)) AND inp(3)) OR (NOT(reset) AND NOT(
+inp(0) AND NOT(inp(1)) AND inp(2))))));
+END;

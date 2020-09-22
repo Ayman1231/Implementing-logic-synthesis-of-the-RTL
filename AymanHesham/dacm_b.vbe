@@ -1,0 +1,69 @@
+-- VHDL data flow description generated from `dacm_b`
+--		date : Fri Apr 26 19:21:57 2019
+
+
+-- Entity Declaration
+
+ENTITY dacm_b IS
+  PORT (
+  ck : in BIT;	-- ck
+  vdd : in BIT;	-- vdd
+  vss : in BIT;	-- vss
+  inp : in bit_vector(3 DOWNTO 0) ;	-- inp
+  daytime : in BIT;	-- daytime
+  reset : in BIT;	-- reset
+  alarm : out BIT;	-- alarm
+  door : out BIT	-- door
+  );
+END dacm_b;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE behaviour_data_flow OF dacm_b IS
+  SIGNAL dac_cs : REG_VECTOR(2 DOWNTO 0) REGISTER;	-- dac_cs
+  SIGNAL aux0 : BIT;		-- aux0
+  SIGNAL aux1 : BIT;		-- aux1
+  SIGNAL aux2 : BIT;		-- aux2
+  SIGNAL aux3 : BIT;		-- aux3
+  SIGNAL aux4 : BIT;		-- aux4
+  SIGNAL aux5 : BIT;		-- aux5
+
+BEGIN
+  aux5 <= (NOT(inp(0)) AND inp(1));
+  aux4 <= NOT(daytime AND inp(3));
+  aux3 <= (aux2 AND NOT(dac_cs(2)));
+  aux2 <= (NOT(inp(2)) AND NOT(reset));
+  aux1 <= NOT(inp(3) XOR dac_cs(1));
+  aux0 <= (inp(2) AND NOT(reset));
+  label0 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs (0) <= GUARDED ((aux3 AND NOT(inp(3)) AND NOT(dac_cs(1)) AND NOT
+(dac_cs(0)) AND aux5) OR (aux2 AND dac_cs(2) AND 
+NOT(inp(3)) AND NOT(dac_cs(0)) AND NOT(inp(0)) AND 
+NOT(inp(1))));
+  END BLOCK label0;
+  label1 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs (1) <= GUARDED (aux0 AND dac_cs(2) AND NOT(inp(3)) AND dac_cs(0)
+ AND aux5);
+  END BLOCK label1;
+  label2 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs (2) <= GUARDED (((aux3 AND inp(3)) OR NOT(dac_cs(0))) AND aux3 
+AND aux1 AND aux5);
+  END BLOCK label2;
+
+door <= (((aux0 AND NOT(dac_cs(2)) AND NOT(inp(3)) AND 
+dac_cs(0)) OR (aux0 AND NOT(aux4))) AND inp(0) AND NOT(
+inp(1)));
+
+alarm <= (((((NOT(inp(2)) OR NOT(dac_cs(2)) OR inp(3)) AND
+ dac_cs(0)) OR ((inp(2) OR dac_cs(2) OR NOT(aux1))
+ AND NOT(dac_cs(0))) OR inp(0)) AND NOT(reset) AND
+ inp(1)) OR ((((NOT(inp(2)) OR dac_cs(2) OR inp(3)
+ OR dac_cs(1) OR NOT(dac_cs(0))) AND (NOT(inp(2)) 
+OR aux4) AND NOT(reset) AND inp(0)) OR ((inp(2) OR 
+NOT(dac_cs(2)) OR inp(3) OR dac_cs(0)) AND NOT(reset
+) AND NOT(inp(0)))) AND NOT(inp(1))));
+END;

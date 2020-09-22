@@ -1,0 +1,72 @@
+-- VHDL data flow description generated from `dacj_b`
+--		date : Fri Apr 26 19:21:56 2019
+
+
+-- Entity Declaration
+
+ENTITY dacj_b IS
+  PORT (
+  ck : in BIT;	-- ck
+  vdd : in BIT;	-- vdd
+  vss : in BIT;	-- vss
+  inp : in bit_vector(3 DOWNTO 0) ;	-- inp
+  daytime : in BIT;	-- daytime
+  reset : in BIT;	-- reset
+  alarm : out BIT;	-- alarm
+  door : out BIT	-- door
+  );
+END dacj_b;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE behaviour_data_flow OF dacj_b IS
+  SIGNAL dac_cs : REG_VECTOR(2 DOWNTO 0) REGISTER;	-- dac_cs
+  SIGNAL aux1 : BIT;		-- aux1
+  SIGNAL aux3 : BIT;		-- aux3
+  SIGNAL aux4 : BIT;		-- aux4
+  SIGNAL aux5 : BIT;		-- aux5
+  SIGNAL aux6 : BIT;		-- aux6
+  SIGNAL aux8 : BIT;		-- aux8
+  SIGNAL aux11 : BIT;		-- aux11
+  SIGNAL aux12 : BIT;		-- aux12
+  SIGNAL aux13 : BIT;		-- aux13
+
+BEGIN
+  aux13 <= (NOT(reset) AND inp(1));
+  aux12 <= (NOT(reset) AND NOT(inp(1)));
+  aux11 <= (((aux4 AND dac_cs(2)) AND NOT(dac_cs(1))) AND 
+inp(2));
+  aux8 <= ((aux5 AND NOT(dac_cs(1))) AND NOT(inp(2)));
+  aux6 <= NOT(NOT(aux5) OR NOT(dac_cs(1)));
+  aux5 <= NOT(NOT(aux4) OR dac_cs(0));
+  aux4 <= NOT(inp(0) OR inp(3));
+  aux3 <= NOT(inp(0) AND (inp(3) OR aux1));
+  aux1 <= ((NOT(dac_cs(2)) AND dac_cs(0)) AND NOT(dac_cs(1)
+));
+  label0 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs (0) <= GUARDED (((aux11 OR aux8) AND aux13) OR (aux6 AND NOT(
+inp(2)) AND aux12));
+  END BLOCK label0;
+  label1 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs (1) <= GUARDED ((aux11 OR (NOT(inp(0)) AND inp(3) AND dac_cs(0) 
+AND dac_cs(1) AND NOT(inp(2)))) AND aux13);
+  END BLOCK label1;
+  label2 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs (2) <= GUARDED (aux8 AND aux13);
+  END BLOCK label2;
+
+door <= (((inp(0) AND NOT(inp(3)) AND NOT(dac_cs(2)) AND 
+dac_cs(0)) OR daytime) AND NOT(aux3) AND inp(2) AND aux12);
+
+alarm <= (((((inp(3) OR dac_cs(2)) AND NOT(dac_cs(0))) OR 
+inp(0) OR (NOT(inp(3)) AND dac_cs(1)) OR aux1 OR ((
+inp(3) OR NOT(dac_cs(2))) AND inp(2)) OR (dac_cs(2) AND
+ NOT(dac_cs(1)) AND NOT(inp(2)))) AND aux13) OR ((
+(inp(3) AND inp(2) AND NOT(reset) AND NOT(daytime)
+) OR (((aux3 AND inp(2)) OR (NOT(aux6) AND NOT(
+inp(2)))) AND NOT(reset))) AND NOT(inp(1))));
+END;

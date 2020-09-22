@@ -1,0 +1,72 @@
+-- VHDL data flow description generated from `dacr_b`
+--		date : Fri Apr 26 19:21:58 2019
+
+
+-- Entity Declaration
+
+ENTITY dacr_b IS
+  PORT (
+  ck : in BIT;	-- ck
+  vdd : in BIT;	-- vdd
+  vss : in BIT;	-- vss
+  inp : in bit_vector(3 DOWNTO 0) ;	-- inp
+  daytime : in BIT;	-- daytime
+  reset : in BIT;	-- reset
+  alarm : out BIT;	-- alarm
+  door : out BIT	-- door
+  );
+END dacr_b;
+
+
+-- Architecture Declaration
+
+ARCHITECTURE behaviour_data_flow OF dacr_b IS
+  SIGNAL dac_cs : REG_VECTOR(2 DOWNTO 0) REGISTER;	-- dac_cs
+  SIGNAL aux0 : BIT;		-- aux0
+  SIGNAL aux1 : BIT;		-- aux1
+  SIGNAL aux2 : BIT;		-- aux2
+  SIGNAL aux18 : BIT;		-- aux18
+  SIGNAL aux19 : BIT;		-- aux19
+  SIGNAL aux20 : BIT;		-- aux20
+  SIGNAL aux21 : BIT;		-- aux21
+
+BEGIN
+  aux21 <= ((((dac_cs(2) OR reset) OR NOT(dac_cs(0))) OR NOT
+(dac_cs(1))) AND NOT(inp(1)));
+  aux20 <= (NOT(reset) AND NOT(inp(3)));
+  aux19 <= (NOT(reset) AND inp(3));
+  aux18 <= (((((inp(2) OR dac_cs(0)) AND NOT(dac_cs(1))) OR 
+((dac_cs(2) AND inp(0)) OR (aux2 OR reset))) OR ((
+(dac_cs(2) AND dac_cs(1)) AND inp(3)) OR ((NOT(
+inp(2)) AND NOT(inp(0))) AND NOT(inp(3))))) AND inp(1));
+  aux2 <= (NOT(dac_cs(2)) AND NOT(dac_cs(0)));
+  aux1 <= NOT(dac_cs(2) XOR inp(2));
+  aux0 <= NOT(inp(2) AND daytime);
+  label0 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs (0) <= GUARDED (aux18 OR aux21);
+  END BLOCK label0;
+  label1 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs (1) <= GUARDED (aux18 OR ((dac_cs(2) OR inp(2) OR reset OR 
+dac_cs(0) OR inp(0) OR inp(3)) AND aux21));
+  END BLOCK label1;
+  label2 : BLOCK ((NOT((ck'STABLE)) AND ck) = '1')
+  BEGIN
+    dac_cs (2) <= GUARDED (aux1 AND NOT(reset) AND NOT(inp(0)) AND 
+dac_cs(1) AND NOT(inp(3)) AND inp(1));
+  END BLOCK label2;
+
+door <= (((NOT(aux0) AND NOT(reset) AND inp(0) AND inp(3)
+) OR (inp(2) AND NOT(reset) AND dac_cs(0) AND 
+inp(0) AND NOT(dac_cs(1)) AND NOT(inp(3)))) AND NOT(
+inp(1)));
+
+alarm <= (((((NOT(dac_cs(2)) OR inp(2) OR dac_cs(0) OR 
+inp(0) OR dac_cs(1)) AND aux19) OR ((aux2 OR NOT(aux1) 
+OR inp(0) OR NOT(dac_cs(1))) AND aux20)) AND inp(1)
+) OR ((((aux0 OR NOT(inp(0))) AND aux19) OR ((
+dac_cs(2) OR (inp(2) XOR dac_cs(0)) OR (NOT(inp(2)) AND 
+inp(0)) OR (inp(2) AND NOT(inp(0))) OR dac_cs(1)) AND 
+aux20)) AND NOT(inp(1))));
+END;

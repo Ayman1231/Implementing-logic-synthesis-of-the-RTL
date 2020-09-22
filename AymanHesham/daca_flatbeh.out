@@ -1,0 +1,52 @@
+
+      @@@@@@@@@  @@@@                      @@@@@@@               @@@       
+        @@    @    @@                @       @@   @@              @@       
+        @@     @   @@               @@       @@    @@             @@       
+        @@         @@     @@@@      @@       @@    @@    @@@@@    @@ @@@   
+        @@   @     @@    @@   @   @@@@@@@@   @@   @@    @     @   @@@  @@  
+        @@@@@@     @@    @@   @@    @@       @@@@@@    @@     @@  @@    @@ 
+        @@   @     @@      @@@@@    @@       @@    @@  @@@@@@@@@  @@    @@ 
+        @@         @@    @@   @@    @@       @@     @@ @@         @@    @@ 
+        @@         @@   @@    @@    @@       @@     @@ @@      @  @@    @@ 
+        @@         @@   @@   @@@    @@   @   @@    @@   @@    @@  @@    @@ 
+      @@@@@@     @@@@@@  @@@@  @@    @@@@  @@@@@@@@       @@@@   @@@@  @@@@
+
+                              a netlist abstractor
+
+           Alliance CAD System 5.0 20090901, flatbeh 5.0 [2000/11/01]
+           Copyright (c) 1993-2019,                    ASIM/LIP6/UPMC
+           Author(s):                François DONNET, Huu Nghia VUONG
+           E-mail        :                alliance-users@asim.lip6.fr
+
+     =========================  Environnement  =========================
+     MBK_WORK_LIB        = .
+     MBK_CATA_LIB        = .:/usr/lib/alliance/cells/sxlib:/usr/lib/alliance/cells/dp_sxlib:/usr/lib/alliance/cells/rflib:/usr/lib/alliance/cells/rf2lib:/usr/lib/alliance/cells/ramlib:/usr/lib/alliance/cells/romlib:/usr/lib/alliance/cells/pxlib:/usr/lib/alliance/cells/padlib
+     MBK_CATAL_NAME      = CATAL
+     ============================== Files ==============================
+     Netlist file        = daca_b_l.vst
+     Output  file        = daca_b_l_net.vbe
+     ===================================================================
+
+Loading './daca_b_l.vst'
+flattening figure daca_b_l 
+ loading an12_x1 
+ loading on12_x1 
+ loading o4_x2 
+ loading no3_x1 
+ loading na3_x1 
+ loading sff1_x4 
+ loading inv_x2 
+ loading no4_x1 
+ loading no2_x1 
+ loading na4_x1 
+ loading na2_x1 
+ loading xr2_x1 
+ loading ao22_x2 
+ loading noa22_x1 
+ loading a2_x2 
+ loading o2_x2 
+ loading o3_x2 
+ loading oa2ao222_x2 
+ loading buf_x2 
+Restoring array's orders 
+BEH : Saving 'daca_b_l_net' in a vhdl file (vbe)
